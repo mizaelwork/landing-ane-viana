@@ -1,0 +1,18 @@
+.git
+.gitignore
+node_modules
+screenshoots_pages
+assets
+midias ane
+variation-*.html
+variation-*.png
+variation-*-round-*.png
+aneviana-source.html
+content.md
+model-*-spec.md
+CLAUDE.md
+build-whatsapp-logo.html
+inspect-whatsapp-logo.html
+package.json
+package-lock.json
+

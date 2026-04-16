@@ -1,0 +1,15 @@
+node_modules/
+screenshoots_pages/
+build-whatsapp-logo.html
+inspect-whatsapp-logo.html
+aneviana-source.html
+content.md
+CLAUDE.md
+model-*-spec.md
+package.json
+package-lock.json
+variation-1*
+variation-2*
+variation-3*
+variation-4*
+variation-5*

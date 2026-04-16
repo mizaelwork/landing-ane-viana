@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ane Viana Links Variation 6</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg-1: #120a0a;
+      --bg-2: #1a0f10;
+      --bg-3: #241616;
+      --ink: #f6efe6;
+      --muted: #bea992;
+      --soft: #ead8c9;
+      --gold: #d5b18a;
+      --line: rgba(255, 238, 220, 0.12);
+      --glass: rgba(255, 246, 236, 0.06);
+      --shadow: 0 34px 90px rgba(0, 0, 0, 0.32);
+      --column: 500px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(244, 220, 188, 0.18), transparent 22%),
+        radial-gradient(circle at 8% 14%, rgba(154, 53, 82, 0.16), transparent 20%),
+        radial-gradient(circle at 92% 12%, rgba(149, 95, 59, 0.16), transparent 22%),
+        linear-gradient(180deg, #1b1111 0%, #110a0a 42%, #0d0808 100%);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Manrope", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 50% -6%, rgba(250, 233, 206, 0.12), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0)),
+        linear-gradient(180deg, transparent, rgba(0,0,0,0.08));
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      pointer-events: none;
+      filter: blur(70px);
+      opacity: 0.55;
+      z-index: 0;
+    }
+
+    body::before {
+      top: 120px;
+      left: -90px;
+      width: 260px;
+      height: 260px;
+      background: rgba(161, 54, 88, 0.22);
+      border-radius: 999px;
+    }
+
+    body::after {
+      top: 380px;
+      right: -70px;
+      width: 260px;
+      height: 260px;
+      background: rgba(216, 168, 122, 0.18);
+      border-radius: 999px;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      padding: 32px 0 110px;
+    }
+
+    .column {
+      width: min(calc(100vw - 36px), var(--column));
+      margin: 0 auto;
+    }
+
+    .cover-frame {
+      position: relative;
+      overflow: hidden;
+      min-height: 690px;
+      border-radius: 42px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)),
+        rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .cover-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.02) 34%, rgba(0,0,0,0.64) 100%);
+      pointer-events: none;
+    }
+
+    .cover-frame img {
+      width: 100%;
+      height: 690px;
+      display: block;
+      object-fit: cover;
+      object-position: center top;
+      filter: saturate(0.95) contrast(1.02) brightness(0.97);
+      transform: scale(1.015);
+    }
+
+    .identity {
+      padding: 28px 10px 0;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(213, 177, 138, 0.82);
+    }
+
+    .identity h1,
+    .section-title {
+      margin: 10px 0 0;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(3.2rem, 5.2vw, 5.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.07em;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .handle {
+      margin: 14px 0 0;
+      font-size: clamp(1.8rem, 2.5vw, 2.35rem);
+      line-height: 1.2;
+      color: rgba(234, 216, 201, 0.72);
+      letter-spacing: -0.03em;
+    }
+
+    .intro {
+      margin: 16px auto 0;
+      max-width: 380px;
+      font-size: 1.45rem;
+      line-height: 1.5;
+      color: rgba(234, 216, 201, 0.72);
+    }
+
+    .intro-copy {
+      display: grid;
+      gap: 10px;
+      margin: 18px auto 0;
+      max-width: 410px;
+      text-align: center;
+    }
+
+    .intro-copy .intro {
+      margin: 0;
+      max-width: none;
+    }
+
+    .intro-copy .intro--lead {
+      font-size: 1.68rem;
+      line-height: 1.36;
+      font-weight: 700;
+      color: rgba(246, 239, 230, 0.96);
+    }
+
+    .intro-copy .intro--body {
+      font-size: 1.34rem;
+      line-height: 1.55;
+      color: rgba(234, 216, 201, 0.76);
+    }
+
+    .intro-copy .intro--note {
+      font-size: 1.3rem;
+      line-height: 1.5;
+      color: rgba(213, 177, 138, 0.92);
+    }
+
+    .call-preview-note {
+      margin: 10px 0 0;
+      font-size: 1.2rem;
+      line-height: 1.45;
+      color: rgba(213, 177, 138, 0.92);
+    }
+
+    .social-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .social-link {
+      display: block;
+      width: 68px;
+      height: 68px;
+      text-decoration: none;
+      transition: transform 180ms ease, opacity 180ms ease;
+    }
+
+    .social-link:hover {
+      transform: translateY(-3px);
+      opacity: 0.96;
+    }
+
+    .primary-stack {
+      display: grid;
+      gap: 18px;
+      margin-top: 38px;
+    }
+
+    .feature-card {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      min-height: 580px;
+      border-radius: 34px;
+      background: #201212;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 24px 54px rgba(0,0,0,0.24);
+    }
+
+    .feature-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.12) 45%, rgba(0,0,0,0.82) 100%);
+      pointer-events: none;
+    }
+
+    .feature-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 580px;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.02);
+    }
+
+    .feature-card--privacy img {
+      object-position: center 18%;
+    }
+
+    .feature-card--privacy .card-mark {
+      left: auto;
+      right: 18px;
+    }
+
+    .feature-card--telegram img {
+      object-position: center 12%;
+    }
+
+    .feature-card--grupo img {
+      object-position: center 20%;
+    }
+
+    .card-mark {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      background: transparent;
+      box-shadow: none;
+      overflow: visible;
+    }
+
+    .badge-media {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.16);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .badge-media--nav {
+      width: 68px;
+      height: 68px;
+    }
+
+    .badge-media--mark {
+      width: 54px;
+      height: 54px;
+    }
+
+    .badge-media--mini {
+      width: 46px;
+      height: 46px;
+    }
+
+    .badge-media img,
+    .badge-media svg {
+      display: block;
+      min-height: 0;
+      transform: none;
+    }
+
+    .badge-media--privacy {
+      background: #f4eee4;
+    }
+
+    .badge-media--privacy img {
+      width: 84%;
+      height: 84%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+
+    .badge-media--privacy.badge-media--mark img {
+      width: 84%;
+      height: 84%;
+      object-fit: contain;
+      object-position: center;
+      min-height: 0;
+      transform: none;
+    }
+
+    .badge-media--instagram {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .badge-media--instagram svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .badge-media--whatsapp {
+      background: linear-gradient(180deg, #34d06c 0%, #1fb95a 100%);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.16);
+    }
+
+    .badge-media--whatsapp svg {
+      width: 68%;
+      height: 68%;
+      display: block;
+    }
+
+    .badge-media--telegram,
+    .badge-media--grupo {
+      background: linear-gradient(180deg, #3cb7f5 0%, #229ed9 100%);
+    }
+
+    .badge-media--telegram img,
+    .badge-media--grupo img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      min-height: 0;
+      transform: none;
+    }
+
+    .badge-media--telegram::after,
+    .badge-media--grupo::after {
+      content: none;
+      display: none;
+    }
+
+    .badge-media--telegram::after,
+    .badge-media--grupo::after {
+      position: absolute;
+      right: 2px;
+      bottom: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: #ffffff;
+      font-size: 1rem;
+      line-height: 1;
+      font-weight: 800;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.16);
+    }
+
+    .badge-media--telegram::after {
+      content: "★";
+      color: #c69646;
+    }
+
+    .badge-media--closefans {
+      background: linear-gradient(180deg, #7369dd 0%, #5a4ec0 100%);
+    }
+
+    .badge-media--closefans svg {
+      width: 50%;
+      height: 50%;
+    }
+
+    .badge-media--grupo img {
+      object-fit: contain;
+      transform: scale(0.8);
+    }
+
+    .badge-media--telegram::after,
+    .badge-media--grupo::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    .badge-media--telegram-vip .vip-star {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.96);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.16);
+    }
+
+    .badge-media--telegram-vip.badge-media--mini .vip-star {
+      width: 14px;
+      height: 14px;
+    }
+
+    .badge-media--telegram-vip .vip-star svg {
+      width: 9px;
+      height: 9px;
+      display: block;
+      fill: #c69646;
+    }
+
+    .badge-media--telegram-vip {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .badge-media--telegram-vip > svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .card-copy {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      padding: 22px 22px 24px;
+      text-align: center;
+    }
+
+    .card-kicker {
+      display: inline-block;
+      font-size: 1rem;
+      line-height: 1;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(255,255,255,0.66);
+    }
+
+    .card-copy h2 {
+      margin: 12px 0 0;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(3.1rem, 4.8vw, 4.5rem);
+      line-height: 0.94;
+      letter-spacing: -0.07em;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .card-copy p {
+      margin: 10px auto 0;
+      max-width: 310px;
+      font-size: 1.4rem;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.76);
+    }
+
+    .vsl-shell {
+      margin-top: 28px;
+      padding: 18px;
+      border-radius: 36px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        linear-gradient(180deg, #2b1a17 0%, #1d1211 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .vsl-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 100%),
+        linear-gradient(180deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 100%);
+      background-size: 14px 14px;
+      opacity: 0.14;
+      pointer-events: none;
+    }
+
+    .vsl-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .vsl-head h2 {
+      margin: 8px 0 0;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(2.9rem, 4.2vw, 3.8rem);
+      line-height: 0.95;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+    }
+
+    .vsl-pill {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: rgba(245, 226, 204, 0.82);
+      font-size: 1rem;
+      line-height: 1;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .vsl-player {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+      overflow: hidden;
+      border-radius: 28px;
+      aspect-ratio: 16 / 9;
+      background: #160f0f;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .vsl-player img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center center;
+      filter: saturate(0.94) contrast(1.04) brightness(0.9);
+    }
+
+    .vsl-player::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.2) 52%, rgba(0,0,0,0.88) 100%),
+        radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 34%);
+      pointer-events: none;
+    }
+
+    .vsl-tag {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 2;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(13,9,9,0.52);
+      color: rgba(246,239,230,0.9);
+      font-size: 1rem;
+      line-height: 1;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+      backdrop-filter: blur(12px);
+    }
+
+    .play-orb {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      z-index: 2;
+      width: 92px;
+      height: 92px;
+      border-radius: 999px;
+      transform: translate(-50%, -50%);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.28), rgba(255,255,255,0.08)),
+        rgba(255, 238, 220, 0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.24);
+      backdrop-filter: blur(14px);
+    }
+
+    .play-orb::before {
+      content: "";
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-42%, -50%);
+      border-left: 28px solid #ffffff;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+    }
+
+    .vsl-caption {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 18px;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 14px;
+    }
+
+    .vsl-caption h3 {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(2rem, 3.2vw, 2.7rem);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .vsl-caption p {
+      margin: 8px 0 0;
+      max-width: 250px;
+      font-size: 1.3rem;
+      line-height: 1.35;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .vsl-meta {
+      flex: 0 0 auto;
+      padding: 9px 12px;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.42);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8);
+      font-size: 1rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .vsl-actions {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .vsl-action {
+      display: block;
+      min-height: 148px;
+      padding: 16px;
+      border-radius: 24px;
+      text-decoration: none;
+    }
+
+    .vsl-action h3 {
+      margin: 10px 0 0;
+      font-size: 2.25rem;
+      line-height: 0.96;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .vsl-action p {
+      margin: 10px 0 0;
+      font-size: 1.32rem;
+      line-height: 1.42;
+    }
+
+    .vsl-action--privacy {
+      background: linear-gradient(180deg, #ffffff 0%, #f6efe6 100%);
+      color: #17110f;
+    }
+
+    .vsl-action--privacy .eyebrow,
+    .vsl-action--telegram .eyebrow {
+      color: rgba(23,17,15,0.5);
+    }
+
+    .vsl-action--privacy p,
+    .vsl-action--telegram p {
+      color: rgba(23,17,15,0.72);
+    }
+
+    .vsl-action--telegram {
+      background: linear-gradient(180deg, #f1e2d2 0%, #ecd4bf 100%);
+      color: #17110f;
+    }
+
+    .call-shell {
+      margin-top: 28px;
+    }
+
+    .call-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .call-head h2 {
+      margin: 8px 0 0;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(2.8rem, 4.4vw, 3.8rem);
+      line-height: 0.96;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+    }
+
+    .call-pill {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: rgba(245, 226, 204, 0.82);
+      font-size: 1rem;
+      line-height: 1;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .call-stage {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+      overflow: hidden;
+      border-radius: 28px;
+      min-height: 455px;
+      background: #160f0f;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .call-stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.2) 44%, rgba(0,0,0,0.88) 100%);
+      pointer-events: none;
+    }
+
+    .call-stage > img {
+      width: 100%;
+      height: 455px;
+      display: block;
+      object-fit: cover;
+      object-position: center center;
+      filter: saturate(0.94) contrast(1.02) brightness(0.9);
+    }
+
+    .call-badge-row {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 2;
+      display: flex;
+      gap: 8px;
+    }
+
+    .call-badge {
+      width: 46px;
+      height: 46px;
+      background: transparent;
+      box-shadow: none;
+      overflow: visible;
+    }
+
+    .call-name {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 2;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(13,9,9,0.52);
+      color: rgba(246,239,230,0.9);
+      font-size: 1rem;
+      line-height: 1;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      backdrop-filter: blur(12px);
+    }
+
+    .call-overlay {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      z-index: 2;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+      gap: 16px;
+    }
+
+    .call-overlay small {
+      display: block;
+      margin: 0 0 8px;
+      font-size: 1rem;
+      line-height: 1;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.62);
+    }
+
+    .call-overlay strong {
+      display: block;
+      max-width: 240px;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(2rem, 3.2vw, 2.5rem);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .call-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .call-control {
+      display: inline-grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #ffffff;
+      backdrop-filter: blur(12px);
+    }
+
+    .call-control--end {
+      background: rgba(151, 63, 72, 0.92);
+    }
+
+    .call-control--accept {
+      background: rgba(57, 145, 104, 0.92);
+    }
+
+    .call-preview {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.05);
+      align-items: center;
+    }
+
+    .call-preview img {
+      width: 100%;
+      height: 120px;
+      border-radius: 18px;
+      object-fit: cover;
+      object-position: center 12%;
+      display: block;
+    }
+
+    .call-preview h3 {
+      margin: 8px 0 0;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(2rem, 3.4vw, 2.5rem);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .call-preview-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 2;
+    }
+
+    .call-preview p {
+      margin: 8px 0 0;
+      font-size: 1.28rem;
+      line-height: 1.4;
+      color: rgba(246,239,230,0.76);
+    }
+
+    .call-actions {
+      position: relative;
+      z-index: 1;
+      display: block;
+      margin-top: 14px;
+    }
+
+    .call-action {
+      display: block;
+      min-height: 152px;
+      padding: 18px 20px;
+      border-radius: 26px;
+      text-decoration: none;
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 20px 34px rgba(0,0,0,0.18);
+    }
+
+    .call-action h3 {
+      margin: 10px 0 0;
+      font-size: 2.2rem;
+      line-height: 0.96;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .call-action p {
+      margin: 10px 0 0;
+      font-size: 1.32rem;
+      line-height: 1.42;
+    }
+
+    .call-action--whatsapp {
+      display: grid;
+      grid-template-columns: 62px minmax(0, 1fr);
+      gap: 16px;
+      align-items: center;
+      background: linear-gradient(180deg, #34d06c 0%, #16974b 100%);
+    }
+
+    .call-action .eyebrow {
+      color: rgba(255,255,255,0.72);
+    }
+
+    .call-action p {
+      color: rgba(255,255,255,0.84);
+    }
+
+    .whatsapp-icon {
+      display: grid;
+      place-items: center;
+      width: 62px;
+      height: 62px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.24);
+    }
+
+    .whatsapp-icon svg {
+      width: 34px;
+      height: 34px;
+      fill: #ffffff;
+    }
+
+    .lower-section {
+      margin-top: 34px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .section-header h2 {
+      margin: 8px 0 0;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(2.9rem, 4.6vw, 4rem);
+      line-height: 0.95;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+    }
+
+    .magazine-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .editorial-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .duo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .mini-card {
+      position: relative;
+      display: block;
+      min-height: 250px;
+      overflow: hidden;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 30px;
+      background: #1b1111;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 22px 52px rgba(0,0,0,0.2);
+    }
+
+    .mini-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.18) 50%, rgba(0,0,0,0.9) 100%);
+      pointer-events: none;
+    }
+
+    .mini-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 250px;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.95) brightness(0.92);
+    }
+
+    .mini-card--telegram img {
+      object-position: center 18%;
+    }
+
+    .mini-card--closefans img {
+      object-position: center 20%;
+    }
+
+    .mini-card-copy {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      padding: 16px 14px 18px;
+      text-align: center;
+    }
+
+    .mini-card-copy h3 {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(2.1rem, 3vw, 2.9rem);
+      line-height: 0.96;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      color: #ffffff;
+    }
+
+    .editorial-feature,
+    .editorial-feature img {
+      min-height: 400px;
+    }
+
+    .magazine-card {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 30px;
+      background: #1b1111;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 22px 52px rgba(0,0,0,0.2);
+    }
+
+    .magazine-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.18) 48%, rgba(0,0,0,0.88) 100%);
+      pointer-events: none;
+    }
+
+    .magazine-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      filter: saturate(0.95) brightness(0.92);
+    }
+
+    .magazine-card--closefans {
+      min-height: 470px;
+    }
+
+    .magazine-card--closefans img {
+      min-height: 470px;
+      object-position: 68% center;
+    }
+
+    .side-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .magazine-card--telegram,
+    .magazine-card--grupo {
+      min-height: 228px;
+    }
+
+    .magazine-card--telegram img,
+    .magazine-card--grupo img {
+      min-height: 228px;
+    }
+
+    .magazine-card--telegram img {
+      object-position: center 16%;
+    }
+
+    .magazine-card--grupo img {
+      object-position: center center;
+    }
+
+    .card-title-box {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      padding: 16px 18px 18px;
+      text-align: center;
+    }
+
+    .card-title-box h3 {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(2.3rem, 3.5vw, 3.2rem);
+      line-height: 0.96;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      color: #ffffff;
+    }
+
+    .card-title-box--small h3 {
+      font-size: clamp(2.8rem, 4vw, 3.8rem);
+    }
+
+    .mini-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      background: transparent;
+      box-shadow: none;
+      overflow: visible;
+    }
+
+    .footer-link {
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .footer-link a {
+      color: rgba(246,239,230,0.72);
+      text-decoration: none;
+      font-size: 1.35rem;
+      line-height: 1.4;
+    }
+
+    .footer-link a:hover {
+      color: #ffffff;
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding-top: 22px;
+        padding-bottom: 84px;
+      }
+
+      .column {
+        width: min(calc(100vw - 22px), var(--column));
+      }
+
+      .cover-frame,
+      .cover-frame img {
+        min-height: 560px;
+        height: 560px;
+        border-radius: 34px;
+      }
+
+      .identity {
+        padding-top: 24px;
+      }
+
+      .intro {
+        font-size: 1.34rem;
+      }
+
+      .social-row {
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .social-link {
+        width: 64px;
+        height: 64px;
+      }
+
+      .feature-card,
+      .feature-card img {
+        min-height: 500px;
+      }
+
+      .vsl-shell {
+        margin-top: 24px;
+        padding: 16px;
+        border-radius: 30px;
+      }
+
+      .call-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .call-stage,
+      .call-stage > img {
+        min-height: 380px;
+        height: 380px;
+      }
+
+      .call-preview {
+        grid-template-columns: 1fr;
+      }
+
+      .call-preview img {
+        height: 200px;
+      }
+
+      .call-overlay {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .call-actions {
+        margin-top: 12px;
+      }
+
+      .call-action {
+        min-height: 142px;
+        padding: 14px;
+      }
+
+      .call-action--whatsapp {
+        grid-template-columns: 52px minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .whatsapp-icon {
+        width: 52px;
+        height: 52px;
+      }
+
+      .vsl-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .play-orb {
+        width: 78px;
+        height: 78px;
+      }
+
+      .play-orb::before {
+        border-left-width: 24px;
+        border-top-width: 15px;
+        border-bottom-width: 15px;
+      }
+
+      .vsl-caption {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .vsl-meta {
+        padding: 8px 10px;
+      }
+
+      .vsl-actions {
+        gap: 10px;
+      }
+
+      .vsl-action {
+        min-height: 142px;
+        padding: 14px;
+      }
+
+      .magazine-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .duo-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .magazine-card--closefans,
+      .magazine-card--closefans img {
+        min-height: 380px;
+      }
+
+      .mini-card,
+      .mini-card img {
+        min-height: 214px;
+      }
+
+      .editorial-feature,
+      .editorial-feature img {
+        min-height: 340px;
+      }
+
+      .magazine-card--telegram,
+      .magazine-card--grupo,
+      .magazine-card--telegram img,
+      .magazine-card--grupo img {
+        min-height: 214px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="column">
+      <section class="cover-frame" aria-label="Capa principal de Ane Viana">
+        <img src="midias ane/IMG_4114.JPG" alt="Ane Viana">
+      </section>
+
+      <section class="identity" aria-label="Perfil principal">
+        <h1>Ane Viana</h1>
+        <p class="handle">@anevianaaa</p>
+
+        <div class="social-row" aria-label="Canais oficiais da Ane">
+          <a class="social-link social-link--privacy" href="https://privacy.com.br/@Anevianaa" target="_blank" rel="noopener noreferrer" aria-label="Privacy">
+            <span class="badge-media badge-media--privacy badge-media--nav" aria-hidden="true">
+              <img src="assets/privacy-thumb.png" alt="">
+            </span>
+          </a>
+          <a class="social-link social-link--telegram" href="https://t.me/Aneviana2026_bot" target="_blank" rel="noopener noreferrer" aria-label="Telegram VIP">
+            <span class="badge-media badge-media--telegram badge-media--nav" aria-hidden="true">
+              <img src="assets/telegram-thumb.png" alt="">
+            </span>
+          </a>
+          <a class="social-link social-link--closefans" href="https://close.fans/aneviana" target="_blank" rel="noopener noreferrer" aria-label="Closefans">
+            <span class="badge-media badge-media--closefans badge-media--nav" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="#fff">
+                <path d="M12 2.25c4.9 0 8.88 3.98 8.88 8.88 0 5.98-5.45 9.67-8.18 10.95a1.72 1.72 0 0 1-1.4 0C8.57 20.8 3.12 17.11 3.12 11.13 3.12 6.23 7.1 2.25 12 2.25Zm0 3.11a4.93 4.93 0 0 0-4.93 4.93 5.2 5.2 0 0 0 2.44 4.43 4.48 4.48 0 0 1-.2-1.33c0-2.07 1.27-3.38 2.69-4.87.95-.99 1.94-2.02 1.94-3.54 0-.24-.02-.47-.06-.69a4.93 4.93 0 0 0-1.88-.35Zm3.8 2.02c.01.16.02.32.02.49 0 2.72-1.48 4.27-2.78 5.63-.99 1.04-1.77 1.86-1.77 3.13 0 .51.12 1.01.36 1.47.12.03.24.04.37.04a4.93 4.93 0 0 0 4.93-4.93c0-2.16-1.39-3.99-3.13-5.12Z"/>
+              </svg>
+            </span>
+          </a>
+          <a class="social-link social-link--instagram" href="https://www.instagram.com/anevianaaa/" target="_blank" rel="noopener noreferrer" aria-label="Instagram oficial da Ane">
+            <span class="badge-media badge-media--instagram badge-media--nav" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <defs>
+                  <linearGradient id="igGradient" x1="4" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#f7d76a"/>
+                    <stop offset="0.35" stop-color="#f38b4d"/>
+                    <stop offset="0.68" stop-color="#de4f72"/>
+                    <stop offset="1" stop-color="#8f46d8"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="12" cy="12" r="11" fill="url(#igGradient)"/>
+                <rect x="7.05" y="7.05" width="9.9" height="9.9" rx="3.2" stroke="#fff" stroke-width="1.8"/>
+                <circle cx="12" cy="12" r="2.45" stroke="#fff" stroke-width="1.8"/>
+                <circle cx="16.15" cy="7.9" r="0.95" fill="#fff"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+
+        <div class="intro-copy" aria-label="Descricao do conteudo da Ane">
+          <p class="intro intro--lead">O melhor eu guardo pra quem decide entrar... 😏</p>
+          <p class="intro intro--body">Na minha plataforma privada, compartilho conteudos exclusivos, momentos especiais e versoes minhas que so quem assina tem acesso 😈</p>
+        </div>
+      </section>
+
+      <section class="primary-stack" aria-label="Links principais">
+        <a class="feature-card feature-card--privacy" href="https://privacy.com.br/@Anevianaa" target="_blank" rel="noopener noreferrer">
+          <div class="card-mark" aria-hidden="true">
+            <span class="badge-media badge-media--privacy badge-media--mark">
+              <img src="assets/privacy-thumb.png" alt="">
+            </span>
+          </div>
+          <img src="midias ane/IMG_4419.JPG" alt="Privacy da Ane Viana">
+          <div class="card-copy">
+            <h2>Privacy</h2>
+          </div>
+        </a>
+
+        <a class="feature-card feature-card--telegram" href="https://t.me/Aneviana2026_bot" target="_blank" rel="noopener noreferrer">
+          <div class="card-mark" aria-hidden="true">
+            <span class="badge-media badge-media--telegram badge-media--telegram-vip badge-media--mark">
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="11" fill="#38A9E8"/>
+                <path d="M17.83 7.33 6.63 12.04c-.73.32-.69 1.37.06 1.64l2.87 1.04 1.08 3.39c.23.73 1.19.83 1.58.17l1.65-2.34 2.67 1.94c.53.38 1.28.09 1.39-.55l1.72-9.02a.84.84 0 0 0-1.22-.98Z" fill="#fff"/>
+                <path d="m10.03 14.41 5.72-4.58-4.52 5.5-.4 1.72-.8-2.64Z" fill="#38A9E8"/>
+                <circle cx="18.4" cy="5.6" r="3.2" fill="#fff"/>
+                <path d="m18.4 3.9.84 1.71 1.88.27-1.36 1.32.32 1.89-1.68-.88-1.68.88.32-1.89-1.36-1.32 1.88-.27.84-1.71Z" fill="#C69646"/>
+              </svg>
+            </span>
+          </div>
+          <img src="midias ane/IMG_4420.JPG" alt="Telegram VIP da Ane Viana">
+          <div class="card-copy">
+            <h2>Telegram VIP</h2>
+          </div>
+        </a>
+      </section>
+
+      <section class="vsl-shell call-shell" aria-label="Chamada com Ane">
+        <div class="call-head">
+          <div>
+            <h2>Video chamada ao vivo</h2>
+          </div>
+        </div>
+
+        <div class="call-stage">
+          <div class="call-badge-row" aria-hidden="true">
+            <span class="call-badge">
+              <span class="badge-media badge-media--whatsapp badge-media--mini">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12.02 4.18a7.82 7.82 0 0 0-6.72 11.82l-.44 1.55 1.59-.41a7.84 7.84 0 1 0 5.57-12.96Z" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M15.72 13.88c-.2-.1-1.18-.58-1.36-.65-.18-.06-.31-.1-.43.1-.12.19-.51.64-.62.78-.11.13-.22.15-.41.05-.2-.1-.83-.31-1.58-.86-.58-.47-.96-1.06-1.08-1.24-.12-.2-.01-.3.09-.39.09-.09.2-.22.29-.33.1-.1.13-.18.2-.31.07-.13.03-.24-.02-.34-.05-.1-.44-1.06-.6-1.45-.16-.38-.32-.33-.43-.34h-.37c-.12 0-.32.05-.49.24-.17.19-.65.64-.65 1.57s.67 1.82.77 1.94c.09.13 1.32 2.03 3.2 2.84.45.19.8.31 1.07.4.45.14.86.12 1.18.07.36-.05 1.11-.45 1.27-.88.16-.44.16-.81.11-.88-.04-.08-.17-.14-.38-.23Z" fill="#fff"/>
+                </svg>
+              </span>
+            </span>
+            <span class="call-badge">
+              <span class="badge-media badge-media--privacy badge-media--mini">
+                <img src="assets/privacy-thumb.png" alt="">
+              </span>
+            </span>
+          </div>
+          <img src="midias ane/IMG_4425.JPG" alt="Preview de chamada com Ane Viana">
+          <div class="call-name">Ane Viana</div>
+          <div class="call-overlay">
+            <div>
+              <small>Agendamento guiado</small>
+              <strong>Ao vivo, sem filtros e bem mais perto de voce</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="call-preview">
+          <span class="call-preview-badge">
+            <span class="badge-media badge-media--whatsapp badge-media--mini" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12.02 4.18a7.82 7.82 0 0 0-6.72 11.82l-.44 1.55 1.59-.41a7.84 7.84 0 1 0 5.57-12.96Z" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15.72 13.88c-.2-.1-1.18-.58-1.36-.65-.18-.06-.31-.1-.43.1-.12.19-.51.64-.62.78-.11.13-.22.15-.41.05-.2-.1-.83-.31-1.58-.86-.58-.47-.96-1.06-1.08-1.24-.12-.2-.01-.3.09-.39.09-.09.2-.22.29-.33.1-.1.13-.18.2-.31.07-.13.03-.24-.02-.34-.05-.1-.44-1.06-.6-1.45-.16-.38-.32-.33-.43-.34h-.37c-.12 0-.32.05-.49.24-.17.19-.65.64-.65 1.57s.67 1.82.77 1.94c.09.13 1.32 2.03 3.2 2.84.45.19.8.31 1.07.4.45.14.86.12 1.18.07.36-.05 1.11-.45 1.27-.88.16-.44.16-.81.11-.88-.04-.08-.17-.14-.38-.23Z" fill="#fff"/>
+              </svg>
+            </span>
+          </span>
+          <img src="midias ane/IMG_4418.JPG" alt="Ane Viana em preview">
+          <div>
+            <h3>Acesso Vip Online</h3>
+            <p>Experiencia exclusiva, privada e personalizada para voce.</p>
+            <p class="call-preview-note">Se voce chegou ate aqui, talvez nao seja por acaso...</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="lower-section" aria-label="Outros canais oficiais">
+        <div class="section-header">
+          <h2>Canais oficiais</h2>
+        </div>
+
+        <div class="editorial-grid">
+          <div class="duo-grid">
+            <a class="mini-card mini-card--telegram" href="https://t.me/Aneviana2026_bot" target="_blank" rel="noopener noreferrer">
+              <div class="mini-badge" aria-hidden="true">
+                <span class="badge-media badge-media--telegram badge-media--telegram-vip badge-media--mini">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="11" fill="#38A9E8"/>
+                    <path d="M17.83 7.33 6.63 12.04c-.73.32-.69 1.37.06 1.64l2.87 1.04 1.08 3.39c.23.73 1.19.83 1.58.17l1.65-2.34 2.67 1.94c.53.38 1.28.09 1.39-.55l1.72-9.02a.84.84 0 0 0-1.22-.98Z" fill="#fff"/>
+                    <path d="m10.03 14.41 5.72-4.58-4.52 5.5-.4 1.72-.8-2.64Z" fill="#38A9E8"/>
+                    <circle cx="18.4" cy="5.6" r="3.2" fill="#fff"/>
+                    <path d="m18.4 3.9.84 1.71 1.88.27-1.36 1.32.32 1.89-1.68-.88-1.68.88.32-1.89-1.36-1.32 1.88-.27.84-1.71Z" fill="#C69646"/>
+                  </svg>
+                </span>
+              </div>
+              <img src="midias ane/IMG_4418.JPG" alt="Telegram VIP da Ane Viana">
+              <div class="mini-card-copy">
+                <h3>Telegram VIP</h3>
+              </div>
+            </a>
+
+            <a class="mini-card mini-card--closefans" href="https://close.fans/aneviana" target="_blank" rel="noopener noreferrer">
+              <div class="mini-badge" aria-hidden="true">
+                <span class="badge-media badge-media--closefans badge-media--mini">
+                  <svg viewBox="0 0 24 24" fill="#fff">
+                    <path d="M12 2.25c4.9 0 8.88 3.98 8.88 8.88 0 5.98-5.45 9.67-8.18 10.95a1.72 1.72 0 0 1-1.4 0C8.57 20.8 3.12 17.11 3.12 11.13 3.12 6.23 7.1 2.25 12 2.25Zm0 3.11a4.93 4.93 0 0 0-4.93 4.93 5.2 5.2 0 0 0 2.44 4.43 4.48 4.48 0 0 1-.2-1.33c0-2.07 1.27-3.38 2.69-4.87.95-.99 1.94-2.02 1.94-3.54 0-.24-.02-.47-.06-.69a4.93 4.93 0 0 0-1.88-.35Zm3.8 2.02c.01.16.02.32.02.49 0 2.72-1.48 4.27-2.78 5.63-.99 1.04-1.77 1.86-1.77 3.13 0 .51.12 1.01.36 1.47.12.03.24.04.37.04a4.93 4.93 0 0 0 4.93-4.93c0-2.16-1.39-3.99-3.13-5.12Z"/>
+                  </svg>
+                </span>
+              </div>
+              <img src="midias ane/IMG_4424.JPG" alt="Closefans da Ane Viana">
+              <div class="mini-card-copy">
+                <h3>Closefans</h3>
+              </div>
+            </a>
+          </div>
+
+          <a class="feature-card feature-card--grupo editorial-feature" href="https://t.me/+5xQTS-lXA0c3ZGUx" target="_blank" rel="noopener noreferrer">
+            <div class="card-mark" aria-hidden="true">
+              <span class="badge-media badge-media--grupo badge-media--mark">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M9 11.2a2.9 2.9 0 1 0 0-5.8 2.9 2.9 0 0 0 0 5.8Zm6 .8a2.4 2.4 0 1 0 0-4.8 2.4 2.4 0 0 0 0 4.8Zm-6 1.2c-3 0-5.4 1.55-5.4 3.46C3.6 17.42 3.95 18 4.4 18h9.2c.45 0 .8-.58.8-1.34 0-1.91-2.4-3.46-5.4-3.46Zm6 .8c-.56 0-1.14.08-1.67.23.88.68 1.47 1.58 1.47 2.63 0 .42-.08.81-.22 1.14h4.02c.39 0 .7-.44.7-1.03 0-1.63-1.93-2.97-4.3-2.97Z" fill="#fff"/>
+                </svg>
+              </span>
+            </div>
+            <img src="midias ane/IMG_4423.JPG" alt="Grupo gratis da Ane Viana">
+            <div class="card-copy">
+              <h2>Grupo gratis</h2>
+            </div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
