@@ -790,6 +790,7 @@
     }
 
     .call-stage {
+      display: block;
       position: relative;
       z-index: 1;
       margin-top: 18px;
@@ -799,6 +800,9 @@
       background: #160f0f;
       border: 1px solid rgba(255,255,255,0.08);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
     }
 
     .call-stage::after {
@@ -921,6 +925,9 @@
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.05);
       align-items: center;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
     }
 
     .call-preview img {
@@ -1482,7 +1489,7 @@
           </div>
         </div>
 
-        <div class="call-stage">
+        <a class="call-stage" href="https://api.whatsapp.com/send?phone=5524981581732&amp;text=Oi%20Ane%2C%20quero%20ver%20os%20horarios%20disponiveis%20para%20a%20chamada%20de%20video." target="_blank" rel="noopener noreferrer" aria-label="Abrir WhatsApp para video chamada">
           <div class="call-badge-row" aria-hidden="true">
             <span class="call-badge">
               <span class="badge-media badge-media--whatsapp badge-media--mini">
@@ -1506,9 +1513,9 @@
               <strong>Ao vivo, sem filtros e bem mais perto de voce</strong>
             </div>
           </div>
-        </div>
+        </a>
 
-        <div class="call-preview">
+        <a class="call-preview" href="https://api.whatsapp.com/send?phone=5524981581732&amp;text=Oi%20Ane%2C%20quero%20ver%20os%20horarios%20disponiveis%20para%20a%20chamada%20de%20video." target="_blank" rel="noopener noreferrer" aria-label="Abrir WhatsApp para acesso VIP online">
           <span class="call-preview-badge">
             <span class="badge-media badge-media--whatsapp badge-media--mini" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1523,7 +1530,7 @@
             <p>Experiencia exclusiva, privada e personalizada para voce.</p>
             <p class="call-preview-note">Se voce chegou ate aqui, talvez nao seja por acaso...</p>
           </div>
-        </div>
+        </a>
       </section>
 
       <section class="lower-section" aria-label="Outros canais oficiais">
