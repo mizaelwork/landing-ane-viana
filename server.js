@@ -35,28 +35,23 @@ app.get('/tracker.js', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'tracker.js'));
 });
 
-/* CORS total para o endpoint de tracking */
-app.use('/track', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') return res.sendStatus(200);
-  next();
-});
-
-/* ── TRACKING ───────────────────────────────────────── */
-app.post('/track', (req, res) => {
+/* ── TRACKING — GET via pixel de imagem (sem CORS) ─── */
+app.get('/t', (req, res) => {
   try {
-    const body  = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-    const { event, page, referrer } = body || {};
-    const ip    = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
-
+    const { e: event, p: page, r: referrer } = req.query;
+    const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
     if (event) {
       db.prepare('INSERT INTO events (event, page, referrer, ip) VALUES (?, ?, ?, ?)')
         .run(event, page || null, referrer || null, ip || null);
     }
   } catch (_) {}
-  res.sendStatus(200);
+  /* retorna pixel 1x1 transparente */
+  res.writeHead(200, {
+    'Content-Type': 'image/gif',
+    'Cache-Control': 'no-store',
+    'Access-Control-Allow-Origin': '*',
+  });
+  res.end(Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64'));
 });
 
 /* ── AUTH ───────────────────────────────────────────── */
