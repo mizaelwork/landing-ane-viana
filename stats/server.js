@@ -6,7 +6,7 @@ const fs         = require('fs');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
-const PASS = process.env.DASHBOARD_PASSWORD || 'ane2025';
+const PASS = process.env.DASHBOARD_PASSWORD || '123456';
 
 /* ── DB ─────────────────────────────────────────────── */
 const dataDir = path.join(__dirname, 'data');
