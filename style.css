@@ -1,0 +1,193 @@
+/* ─── RESET ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  background: #0b0709;
+}
+img { display: block; }
+a   { text-decoration: none; color: inherit; }
+body {
+  font-family: 'Manrope', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── TOPBAR ─────────────────────────────────────────── */
+.topbar {
+  background: #0b0709;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 11px 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.topbar__text {
+  font-size: clamp(10px, 2.4vw, 13px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* ─── STAGE (foto + cta) ──────────────────────────────── */
+.stage {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  display: block;
+}
+
+/* vinheta discreta nas bordas + base */
+.stage__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom,
+      rgba(11,7,9,0.30) 0%,
+      transparent 25%,
+      transparent 55%,
+      rgba(11,7,9,0.55) 100%
+    ),
+    radial-gradient(ellipse 120% 80% at 50% 50%,
+      transparent 40%,
+      rgba(11,7,9,0.25) 100%
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* posiciona o botão no centro-baixo da foto */
+.stage__center {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* empurra levemente para baixo do centro visual */
+  margin-top: 32vh;
+}
+
+/* ─── CTA BUTTON ─────────────────────────────────────── */
+.cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 36px;
+  background: rgba(10, 5, 7, 0.72);
+  border: 1.5px solid rgba(255,255,255,0.85);
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: visible;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.cta:hover {
+  background: rgba(140, 20, 40, 0.75);
+  border-color: #fff;
+}
+.cta:active { transform: scale(0.98); }
+
+/* texto do botão */
+.cta__text {
+  font-size: clamp(12px, 3.2vw, 15px);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+}
+
+/* anel de pulso que se expande e some */
+.cta__pulse {
+  position: absolute;
+  inset: -1px;
+  border-radius: 4px;
+  border: 1.5px solid rgba(255,255,255,0.6);
+  animation: pulse-ring 2.2s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1);    opacity: 0.7; }
+  70%  { transform: scale(1.08); opacity: 0; }
+  100% { transform: scale(1.08); opacity: 0; }
+}
+
+/* shimmer sweep */
+.cta::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -80%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.14),
+    transparent
+  );
+  animation: shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0%   { left: -80%; }
+  50%  { left: 130%; }
+  100% { left: 130%; }
+}
+
+/* ─── FOOTER LEGAL ───────────────────────────────────── */
+.footer {
+  background: #0b0709;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 14px 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.footer p {
+  font-size: clamp(9px, 1.8vw, 11px);
+  font-weight: 500;
+  color: rgba(255,255,255,0.38);
+  line-height: 1.6;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+/* ─── MOBILE ─────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .stage__photo {
+    object-position: center 18%;
+  }
+  .stage__center {
+    margin-top: 38vh;
+    padding: 0 16px;
+    width: 100%;
+  }
+  .cta {
+    width: 100%;
+    max-width: 340px;
+  }
+  .cta__text {
+    white-space: normal;
+    text-align: center;
+  }
+}
