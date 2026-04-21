@@ -30,6 +30,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <!-- Tracker -->
+  <script src="https://stats.acessoaneviana.com.br/tracker.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',function(){AneTrack('pageview_prelanding');});</script>
 </head>
 <body>
 
@@ -57,7 +60,7 @@
         id="cta-btn"
         target="_blank"
         rel="noopener"
-        onclick="fbq('track','Lead',{content_name:'PreLanding'})"
+        onclick="fbq('track','Lead',{content_name:'PreLanding'});AneTrack('cta_click');"
       >
         <span class="cta__pulse"></span>
         <span class="cta__text">CLIQUE E VEJA MEUS CONTEÚDOS EXCLUSIVOS</span>
