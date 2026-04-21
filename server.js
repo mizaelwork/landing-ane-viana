@@ -28,6 +28,13 @@ db.exec(`
 app.use(express.json());
 app.use(express.text({ type: '*/*' }));
 
+/* tracker.js — público, sem auth, CORS liberado */
+app.get('/tracker.js', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Cache-Control', 'public, max-age=3600');
+  res.sendFile(path.join(__dirname, 'public', 'tracker.js'));
+});
+
 /* CORS total para o endpoint de tracking */
 app.use('/track', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
