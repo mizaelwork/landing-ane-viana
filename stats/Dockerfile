@@ -1,8 +1,9 @@
 FROM node:20-alpine
+RUN apk add --no-cache python3 make g++
 WORKDIR /app
-COPY package*.json ./
+COPY stats/package*.json ./
 RUN npm install --production
-COPY . .
+COPY stats/ .
 RUN mkdir -p data
 EXPOSE 3000
 CMD ["node", "server.js"]
