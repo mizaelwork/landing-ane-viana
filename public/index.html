@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Ane Viana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:      #0b0709;
+      --bg2:     #130c0e;
+      --bg3:     #1c1014;
+      --wine:    #8b2035;
+      --gold:    #c9a96e;
+      --ink:     #f4ece4;
+      --muted:   #8a7268;
+      --soft:    #d4c4b8;
+      --line:    rgba(201,169,110,0.12);
+      --green:   #3ddb72;
+      --radius:  14px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { color-scheme: dark; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .header__title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+    }
+    .header__title span { color: var(--gold); }
+    .header__controls { display: flex; gap: 8px; }
+    .btn-period {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-period:hover, .btn-period.active {
+      background: var(--wine);
+      border-color: var(--wine);
+      color: #fff;
+    }
+    .last-update {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dot-live {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: blink 2.5s ease infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    /* ── LAYOUT ── */
+    .main { padding: 28px 32px; max-width: 1200px; margin: 0 auto; }
+
+    /* ── FUNNEL ── */
+    .funnel {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .funnel-card {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .funnel-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--wine);
+      opacity: 0.6;
+    }
+    .funnel-card.highlight::before { background: var(--gold); opacity: 1; }
+    .funnel-card__label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .funnel-card__value {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .funnel-card__sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .funnel-card__rate {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    /* ── GRID 2 COL ── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+    }
+    .card__title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .chart-wrap { position: relative; height: 220px; }
+
+    /* ── BUTTONS TABLE ── */
+    .btn-list { display: flex; flex-direction: column; gap: 10px; }
+    .btn-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-row__label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--soft);
+      width: 140px;
+      flex-shrink: 0;
+    }
+    .btn-row__bar-wrap {
+      flex: 1;
+      height: 8px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .btn-row__bar {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--wine), #c0394f);
+      transition: width 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+    .btn-row__count {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      width: 36px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ── RECENT EVENTS ── */
+    .events-table { width: 100%; border-collapse: collapse; }
+    .events-table th {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
+      padding: 0 12px 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    .events-table td {
+      font-size: 12px;
+      color: var(--soft);
+      padding: 9px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+    .events-table tr:last-child td { border-bottom: none; }
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .badge--view      { background: rgba(61,219,114,0.15); color: #3ddb72; }
+    .badge--cta       { background: rgba(139,32,53,0.3);   color: #f07080; }
+    .badge--telegram  { background: rgba(40,140,220,0.2);  color: #60b8f0; }
+    .badge--closefans { background: rgba(201,169,110,0.2); color: var(--gold); }
+    .badge--privacy   { background: rgba(160,80,200,0.2);  color: #d090f0; }
+    .badge--instagram { background: rgba(220,80,100,0.2);  color: #f08090; }
+    .badge--grupo     { background: rgba(40,180,140,0.2);  color: #50d0b0; }
+    .badge--default   { background: rgba(255,255,255,0.08); color: var(--muted); }
+
+    /* ── EMPTY STATE ── */
+    .empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .header { padding: 14px 16px; }
+      .main   { padding: 16px; }
+      .funnel { grid-template-columns: repeat(2, 1fr); }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .funnel { grid-template-columns: 1fr 1fr; }
+      .funnel-card__value { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div>
+    <div class="header__title">DASHBOARD <span>/ Ane Viana</span></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <div class="header__controls">
+      <button class="btn-period active" data-days="7">7 dias</button>
+      <button class="btn-period" data-days="14">14 dias</button>
+      <button class="btn-period" data-days="30">30 dias</button>
+    </div>
+    <div class="last-update">
+      <span class="dot-live"></span>
+      <span id="last-update-txt">atualizando…</span>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- FUNNEL -->
+  <div class="funnel">
+    <div class="funnel-card">
+      <div class="funnel-card__label">Visitas Pré-site</div>
+      <div class="funnel-card__value" id="f-pre">—</div>
+      <div class="funnel-card__sub">pageviews</div>
+    </div>
+    <div class="funnel-card">
+      <div class="funnel-card__label">Cliques CTA</div>
+      <div class="funnel-card__value" id="f-cta">—</div>
+      <div class="funnel-card__rate" id="f-cta-rate">—% conversão</div>
+    </div>
+    <div class="funnel-card">
+      <div class="funnel-card__label">Visitas Site Principal</div>
+      <div class="funnel-card__value" id="f-main">—</div>
+      <div class="funnel-card__sub">pageviews</div>
+    </div>
+    <div class="funnel-card highlight">
+      <div class="funnel-card__label">Conversão Final</div>
+      <div class="funnel-card__value" id="f-final-rate">—</div>
+      <div class="funnel-card__sub">pré-site → botão</div>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card__title">Visitas ao longo do tempo</div>
+      <div class="chart-wrap">
+        <canvas id="chart-visits"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__title">Cliques por botão</div>
+      <div class="btn-list" id="btn-list">
+        <div class="empty">carregando…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECENT EVENTS -->
+  <div class="card">
+    <div class="card__title">Eventos recentes</div>
+    <div style="overflow-x:auto">
+      <table class="events-table">
+        <thead>
+          <tr>
+            <th>Evento</th>
+            <th>Página</th>
+            <th>Horário</th>
+          </tr>
+        </thead>
+        <tbody id="events-body">
+          <tr><td colspan="3" class="empty">carregando…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  /* ── helpers ── */
+  const $ = (id) => document.getElementById(id);
+  const pct = (a, b) => b > 0 ? ((a / b) * 100).toFixed(1) + '%' : '0%';
+  const fmt = (n) => n.toLocaleString('pt-BR');
+
+  const BADGE = {
+    pageview_prelanding : ['Pré-site view',   'view'],
+    pageview_main       : ['Site principal',  'view'],
+    cta_click           : ['CTA Clicado',     'cta'],
+    click_telegram_vip  : ['Telegram VIP',    'telegram'],
+    click_grupo_gratis  : ['Grupo Grátis',    'grupo'],
+    click_closefans     : ['Closefans',       'closefans'],
+    click_privacy       : ['Privacy',         'privacy'],
+    click_instagram     : ['Instagram',       'instagram'],
+  };
+
+  function badge(event) {
+    const [label, type] = BADGE[event] || [event, 'default'];
+    return `<span class="badge badge--${type}">${label}</span>`;
+  }
+
+  /* ── chart ── */
+  let visitChart = null;
+
+  function buildChart(data) {
+    const ctx = document.getElementById('chart-visits').getContext('2d');
+    const labels    = [...new Set([
+      ...data.prelanding.map(d=>d.day),
+      ...data.cta.map(d=>d.day),
+      ...data.main.map(d=>d.day)
+    ])].sort();
+
+    const toMap = (arr) => Object.fromEntries(arr.map(d=>[d.day, d.n]));
+    const preMap  = toMap(data.prelanding);
+    const ctaMap  = toMap(data.cta);
+    const mainMap = toMap(data.main);
+
+    if (visitChart) visitChart.destroy();
+    visitChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Pré-site',
+            data: labels.map(d => preMap[d] || 0),
+            borderColor: '#c9a96e',
+            backgroundColor: 'rgba(201,169,110,0.08)',
+            tension: 0.4, fill: true, pointRadius: 3,
+          },
+          {
+            label: 'CTA cliques',
+            data: labels.map(d => ctaMap[d] || 0),
+            borderColor: '#c0394f',
+            backgroundColor: 'rgba(139,32,53,0.08)',
+            tension: 0.4, fill: true, pointRadius: 3,
+          },
+          {
+            label: 'Site principal',
+            data: labels.map(d => mainMap[d] || 0),
+            borderColor: '#3ddb72',
+            backgroundColor: 'rgba(61,219,114,0.06)',
+            tension: 0.4, fill: true, pointRadius: 3,
+          },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#8a7268', font: { family: 'Manrope', size: 11 } } }
+        },
+        scales: {
+          x: { ticks: { color: '#8a7268', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
+          y: { ticks: { color: '#8a7268', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.04)' }, beginAtZero: true }
+        }
+      }
+    });
+  }
+
+  /* ── button list ── */
+  function buildBtnList(funnel) {
+    const items = [
+      { label: 'Telegram VIP',  n: funnel.telegram_clicks  },
+      { label: 'Grupo Grátis',  n: funnel.grupo_clicks     },
+      { label: 'Closefans',     n: funnel.closefans_clicks },
+      { label: 'Privacy',       n: funnel.privacy_clicks   },
+      { label: 'Instagram',     n: funnel.instagram_clicks },
+    ];
+    const max = Math.max(...items.map(i => i.n), 1);
+    const el  = $('btn-list');
+    if (items.every(i => i.n === 0)) {
+      el.innerHTML = '<div class="empty">Nenhum clique ainda</div>';
+      return;
+    }
+    el.innerHTML = items.map(i => `
+      <div class="btn-row">
+        <div class="btn-row__label">${i.label}</div>
+        <div class="btn-row__bar-wrap">
+          <div class="btn-row__bar" style="width:${(i.n/max*100).toFixed(1)}%"></div>
+        </div>
+        <div class="btn-row__count">${fmt(i.n)}</div>
+      </div>
+    `).join('');
+  }
+
+  /* ── recent events ── */
+  function buildRecent(events) {
+    const tbody = $('events-body');
+    if (!events.length) {
+      tbody.innerHTML = '<tr><td colspan="3" class="empty">Nenhum evento ainda</td></tr>';
+      return;
+    }
+    tbody.innerHTML = events.map(e => `
+      <tr>
+        <td>${badge(e.event)}</td>
+        <td style="color:var(--muted);font-size:11px">${e.page || '—'}</td>
+        <td style="color:var(--muted);font-size:11px;white-space:nowrap">${new Date(e.created_at + 'Z').toLocaleString('pt-BR')}</td>
+      </tr>
+    `).join('');
+  }
+
+  /* ── load data ── */
+  let currentDays = 7;
+
+  async function load(days) {
+    currentDays = days;
+    try {
+      const res  = await fetch(`/api/stats?days=${days}`);
+      const data = await res.json();
+      const f    = data.funnel;
+
+      /* funnel cards */
+      $('f-pre').textContent   = fmt(f.prelanding_views);
+      $('f-cta').textContent   = fmt(f.cta_clicks);
+      $('f-main').textContent  = fmt(f.main_views);
+      $('f-cta-rate').textContent = pct(f.cta_clicks, f.prelanding_views) + ' conversão';
+
+      const totalBtns = f.telegram_clicks + f.grupo_clicks + f.closefans_clicks + f.privacy_clicks + f.instagram_clicks;
+      $('f-final-rate').textContent = pct(totalBtns, f.prelanding_views);
+
+      buildChart(data.series);
+      buildBtnList(f);
+      buildRecent(data.recent);
+
+      $('last-update-txt').textContent = 'atualizado ' + new Date().toLocaleTimeString('pt-BR');
+    } catch(e) {
+      $('last-update-txt').textContent = 'erro ao carregar';
+    }
+  }
+
+  /* ── period buttons ── */
+  document.querySelectorAll('.btn-period').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.btn-period').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      load(parseInt(btn.dataset.days));
+    });
+  });
+
+  /* ── auto refresh 30s ── */
+  load(7);
+  setInterval(() => load(currentDays), 30000);
+</script>
+</body>
+</html>
