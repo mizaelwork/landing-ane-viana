@@ -378,7 +378,7 @@
         sbCount('leads', 'created_at=gte.' + encodeURIComponent(todayIso)),
         sbCount('conversations', 'is_open=is.true'),
         sbCount('checkout_sessions'),
-        sbCount('checkout_sessions', 'status=eq.paid'),
+        sbCount('checkout_sessions', 'status=eq.approved'),
         sbGet('leads?select=id,telegram_user_id,chat_id,username,first_name,last_name,status,stage,last_message_at,last_message_type,checkout_url_last_sent,checkout_sent_at,created_at,source&order=last_message_at.desc.nullslast&limit=' + LIMIT)
       ]);
 
@@ -391,7 +391,7 @@
         kpiCard('Novos hoje',          fmtNum(novosHoje),        'gold',   'reset 00:00 BRT') +
         kpiCard('Conversas ativas',    fmtNum(conversasAtivas),  'blue',   'is_open = true') +
         kpiCard('Links enviados',      fmtNum(linksEnviados),    'purple', 'checkout_sessions') +
-        kpiCard('Compras aprovadas',   fmtNum(comprasAprovadas), 'green',  'status = paid') +
+        kpiCard('Compras aprovadas',   fmtNum(comprasAprovadas), 'green',  'status = approved') +
         kpiCard('Taxa lead → compra',  taxa,                     'orange', '');
 
       renderLeadsTable();
@@ -404,19 +404,25 @@
   }
 
   function deriveStatus(lead) {
-    // ordem de prioridade
     const now = Date.now();
     const lastMs = lead.last_message_at ? new Date(lead.last_message_at).getTime() : null;
     const stale = lastMs && (now - lastMs > 24 * 3600 * 1000);
+    const status = (lead.status || '').toLowerCase();
+    const stage  = (lead.stage  || '').toLowerCase();
 
-    if ((lead.status || '').toLowerCase() === 'paid' || (lead.stage || '').toLowerCase() === 'paid') {
+    // Cakto webhook grava status='converted' e stage='converted' quando aprovado
+    if (status === 'converted' || stage === 'converted') {
       return { key: 'compra', label: 'Compra aprovada' };
+    }
+    // PIX gerado mas ainda não pago
+    if (stage === 'payment_pending') {
+      return { key: 'interessado', label: 'PIX gerado' };
     }
     if (lead.checkout_sent_at || lead.checkout_url_last_sent) {
       return { key: 'link', label: 'Link enviado' };
     }
     if (stale) return { key: 'frio', label: 'Frio' };
-    if ((lead.stage || '').indexOf('engaged') >= 0 || (lead.status || '') === 'engaged') {
+    if (stage.indexOf('engaged') >= 0 || status === 'engaged') {
       return { key: 'respondeu', label: 'Respondeu' };
     }
     return { key: 'novo', label: 'Novo lead' };
@@ -456,7 +462,7 @@
     $('leadsTable').innerHTML = filtered.map(function (l) {
       const st = deriveStatus(l);
       const linkSent = l.checkout_sent_at || l.checkout_url_last_sent;
-      const purchase = (l.status || '').toLowerCase() === 'paid' || (l.stage || '').toLowerCase() === 'paid';
+      const purchase = (l.status || '') === 'converted' || (l.stage || '') === 'converted';
       const username = l.username ? '@' + escapeHtml(l.username) : '<span class="muted">—</span>';
       const msgType  = l.last_message_type || '—';
       return '<tr data-lead-id="' + escapeHtml(l.id) + '">' +
