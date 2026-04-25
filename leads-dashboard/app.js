@@ -203,31 +203,41 @@
   }
 
   function renderPixelKpis(rows, days) {
-    const total = rows.length;
-    let pageviewsAll = 0, pageviewMain = 0, pageviewPre = 0;
-    let clicksTotal = 0, clickTelVip = 0, clickPrivacy = 0;
+    let pageviewsAll = 0, pageviewMain = 0, pageviewPre = 0, mainFromPre = 0;
+    let clicksTotal = 0, ctaClicks = 0, clickTelVip = 0;
     rows.forEach(function (r) {
       const e = r.event || '';
+      const ref = (r.referrer || '').toLowerCase();
       if (e.indexOf('pageview') === 0) {
         pageviewsAll++;
-        if (e === 'pageview_main') pageviewMain++;
-        else pageviewPre++;
+        if (e === 'pageview_main') {
+          pageviewMain++;
+          // chegou no main vindo do pre-landing?
+          if (ref.indexOf('go.acessoaneviana') >= 0) mainFromPre++;
+        } else {
+          pageviewPre++;
+        }
       }
       if (e === 'cta_click' || e.indexOf('click_') === 0 || e.indexOf('click') >= 0) {
         clicksTotal++;
+        if (e === 'cta_click') ctaClicks++;
         if (e === 'click_telegram_vip') clickTelVip++;
-        if (e === 'click_privacy')      clickPrivacy++;
       }
     });
 
     const periodLabel = days ? ('últimos ' + days + ' dia' + (days>1?'s':'')) : 'desde sempre';
+
+    // Funil: pre -> click CTA -> chegou no main
+    const ctrPre        = pct(ctaClicks, pageviewPre);
+    const conversionPre = pct(mainFromPre, pageviewPre);
+
     const html =
-      kpiCard('Visitas pré-site',     fmtNum(pageviewPre),  'blue',   periodLabel) +
+      kpiCard('Visitas pré-site',       fmtNum(pageviewPre),  'blue',   periodLabel) +
+      kpiCard('Cliques CTA pré',        fmtNum(ctaClicks),    'wine',   ctrPre + ' do pré') +
+      kpiCard('Conversão pré → main',   conversionPre,        'green',  fmtNum(mainFromPre) + ' chegaram') +
       kpiCard('Visitas site principal', fmtNum(pageviewMain), 'gold',   periodLabel) +
-      kpiCard('Cliques CTA total',    fmtNum(clicksTotal),   'wine',   pct(clicksTotal, pageviewsAll) + ' das visitas') +
-      kpiCard('Telegram VIP',         fmtNum(clickTelVip),   'purple', 'cliques no card') +
-      kpiCard('Privacy',              fmtNum(clickPrivacy),  'orange', 'cliques no card') +
-      kpiCard('Eventos no período',   fmtNum(total),         'green',  periodLabel);
+      kpiCard('Cliques CTA (main)',     fmtNum(clicksTotal - ctaClicks), 'orange', 'todos os click_*') +
+      kpiCard('Telegram VIP',           fmtNum(clickTelVip),  'purple', 'cliques no card');
     $('pixelKpis').innerHTML = html;
   }
 

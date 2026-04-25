@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="Conteúdo exclusivo e reservado com Ane Viana.">
+  <meta name="theme-color" content="#0b0709">
+  <meta property="og:title" content="Ane Viana — Acesso Exclusivo">
+  <meta property="og:description" content="Conteúdo exclusivo e reservado com Ane Viana.">
+  <meta property="og:url" content="https://go.acessoaneviana.com.br">
+  <meta property="og:image" content="https://go.acessoaneviana.com.br/assets/ane-hero.jpg">
+  <link rel="canonical" href="https://go.acessoaneviana.com.br">
+  <title>Ane Viana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Pixel Ane Viana (escreve direto no Supabase) -->
+  <script>window.AneTrack=function(){};</script>
+  <script src="https://stats.acessoaneviana.com.br/tracker.js"></script>
+</head>
+<body>
+
+  <!-- ── BARRA TOPO ────────────────────────────────────── -->
+  <div class="topbar">
+    <p class="topbar__text">
+      SEM ENROLAÇÃO. SÓ PRA QUEM MERECE VER O QUE É REALMENTE EXCLUSIVO.
+    </p>
+  </div>
+
+  <!-- ── FOTO + CTA ────────────────────────────────────── -->
+  <div class="stage">
+    <img
+      src="assets/ane-hero.jpg"
+      alt="Ane Viana"
+      class="stage__photo"
+      loading="eager"
+    >
+    <div class="stage__vignette"></div>
+
+    <div class="stage__center">
+      <a
+        href="https://acessoaneviana.com.br"
+        class="cta"
+        id="cta-btn"
+        target="_blank"
+        rel="noopener"
+      >
+        <span class="cta__pulse"></span>
+        <span class="cta__text">CLIQUE E VEJA MEUS CONTEÚDOS EXCLUSIVOS</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER LEGAL ──────────────────────────────────── -->
+  <footer class="footer">
+    <p>
+      Este é o único site oficial de Ane Viana. Todo o conteúdo publicado aqui possui direitos reservados.
+      Este site opera de forma independente e não possui vínculo com plataformas como Facebook ou Google.
+      Todos os links disponíveis direcionam exclusivamente para páginas e plataformas oficiais de Ane Viana.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- Eventos do pixel: pageview do pre-landing + clique no CTA -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      AneTrack('pageview_prelanding');
+      var cta = document.getElementById('cta-btn');
+      if (cta) cta.addEventListener('click', function () { AneTrack('cta_click'); });
+    });
+  </script>
+</body>
+</html>
