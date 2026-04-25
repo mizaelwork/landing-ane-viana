@@ -47,12 +47,15 @@ const user =
   process.env.BASIC_AUTH_USER ||
   process.env.AUTH_USER ||
   process.env.USERNAME ||
-  process.env.STATS_USER;
+  process.env.STATS_USER ||
+  process.env.DASHBOARD_USER ||
+  'admin';                       // fallback se so a senha estiver setada
 const pass =
   process.env.BASIC_AUTH_PASS ||
   process.env.AUTH_PASS ||
   process.env.PASSWORD ||
-  process.env.STATS_PASS;
+  process.env.STATS_PASS ||
+  process.env.DASHBOARD_PASSWORD; // compat com setup atual do EasyPanel
 
 if (user && pass) {
   console.log('[stats] Basic Auth ativo para usuario:', user);
