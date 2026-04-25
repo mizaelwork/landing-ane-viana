@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Painel — Ane Viana</title>
+  <meta name="robots" content="noindex,nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+</head>
+<body>
+  <div class="app">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">A</div>
+        <div class="brand-text">
+          <span class="brand-name">Ane Viana</span>
+          <span class="brand-sub">Painel de Performance</span>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <span class="last-update">Atualizado <strong id="lastUpdate">—</strong></span>
+        <label class="toggle">
+          <input type="checkbox" id="autoRefresh" checked>
+          <span>Auto</span>
+        </label>
+        <button class="btn" id="refreshBtn" type="button">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8a6 6 0 1 1-1.76-4.24"/><path d="M14 2v4h-4"/></svg>
+          Atualizar
+        </button>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="tabs" role="tablist">
+      <button class="tab active" type="button" data-tab="pixel"    role="tab" aria-selected="true">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13V3"/><path d="M2 13h12"/><path d="M5 11V8"/><path d="M9 11V5"/><path d="M13 11v-2"/></svg>
+        Pixel
+      </button>
+      <button class="tab"        type="button" data-tab="telegram" role="tab" aria-selected="false">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2 1.5 7.5l4 1.5"/><path d="m5.5 9 1 4 2.5-2.5"/><path d="m6.5 13 8-11"/></svg>
+        Telegram
+      </button>
+    </nav>
+
+    <div id="configBanner" class="banner warn" style="display:none">
+      <strong>Atenção:</strong>&nbsp;Edite <code>config.js</code> e cole a anon key do Supabase pra carregar dados.
+    </div>
+
+    <!-- ====================== PIXEL TAB ====================== -->
+    <section class="tab-panel active" id="panel-pixel" role="tabpanel">
+
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Métricas do Pixel</h2>
+          <p class="section-sub">Visitas, cliques de CTA e botões dos sites de produção</p>
+        </div>
+        <div class="filters">
+          <select class="select" id="pixelRange">
+            <option value="1">Hoje</option>
+            <option value="7" selected>Últimos 7 dias</option>
+            <option value="30">Últimos 30 dias</option>
+            <option value="90">Últimos 90 dias</option>
+            <option value="0">Tudo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="kpi-grid" id="pixelKpis">
+        <!-- preenchido via JS -->
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3 class="panel-title"><span class="dot"></span>Eventos por dia</h3>
+          <span class="section-sub" id="pixelTrendInfo">—</span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="pixelChart"></canvas>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3 class="panel-title"><span class="dot"></span>Eventos por nome</h3>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Evento</th>
+                <th class="num">Total</th>
+                <th>Páginas</th>
+                <th>Última ocorrência</th>
+              </tr>
+            </thead>
+            <tbody id="pixelEventsTable">
+              <tr><td colspan="4" class="loading">Carregando…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3 class="panel-title"><span class="dot"></span>Atividade recente</h3>
+          <span class="section-sub">Últimos 50 hits</span>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Quando</th>
+                <th>Evento</th>
+                <th>Página</th>
+                <th>Origem (referrer)</th>
+              </tr>
+            </thead>
+            <tbody id="pixelRecentTable">
+              <tr><td colspan="4" class="loading">Carregando…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== TELEGRAM TAB ====================== -->
+    <section class="tab-panel" id="panel-telegram" role="tabpanel">
+
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Leads do Telegram</h2>
+          <p class="section-sub">Conversas vindas do bot <code>@anevianaoficial_bot</code></p>
+        </div>
+      </div>
+
+      <div class="kpi-grid" id="telegramKpis">
+        <!-- preenchido via JS -->
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3 class="panel-title"><span class="dot"></span>Conversas</h3>
+          <div class="filters">
+            <input class="input" id="leadSearch" type="search" placeholder="Buscar nome, @user, chat_id…" style="min-width:220px">
+            <select class="select" id="leadStatus">
+              <option value="">Todos os status</option>
+              <option value="novo">Novo lead</option>
+              <option value="respondeu">Respondeu</option>
+              <option value="link">Link enviado</option>
+              <option value="interessado">Interessado</option>
+              <option value="compra">Compra aprovada</option>
+              <option value="frio">Frio</option>
+              <option value="atencao">Precisa atenção</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Última msg</th>
+                <th>Nome</th>
+                <th>Username</th>
+                <th>Chat ID</th>
+                <th>Mensagem</th>
+                <th>Status</th>
+                <th>Link</th>
+                <th>Compra</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="leadsTable">
+              <tr><td colspan="9" class="loading">Carregando…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Modal de detalhe -->
+  <div class="modal-backdrop" id="leadModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <div class="modal-id" id="modalId">—</div>
+          <div class="modal-name" id="modalName">—</div>
+          <div class="modal-username" id="modalUsername"></div>
+        </div>
+        <div class="modal-actions">
+          <button class="icon-btn" id="modalCopyChat" type="button" title="Copiar chat_id">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/></svg>
+          </button>
+          <a class="icon-btn" id="modalOpenTg" href="#" target="_blank" rel="noopener" title="Abrir no Telegram" style="display:none">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M14.5 2 1.5 7.5l4 1.5L13 4 7.5 10l-1 4 2.5-2.5 3.5 2.5z"/></svg>
+          </a>
+          <button class="icon-btn" id="modalClose" type="button" title="Fechar">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3l10 10M13 3 3 13"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta" id="modalMeta"></div>
+        <div>
+          <h4 class="panel-title" style="margin-bottom:10px"><span class="dot"></span>Histórico</h4>
+          <div class="thread" id="modalThread">
+            <div class="loading">Carregando mensagens…</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copiado</div>
+
+  <script src="config.js"></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

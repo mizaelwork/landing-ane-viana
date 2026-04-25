@@ -8,6 +8,8 @@ CLAUDE.md
 model-*-spec.md
 package.json
 package-lock.json
+!leads-dashboard/package.json
+!leads-dashboard/package-lock.json
 variation-1*
 variation-2*
 variation-3*
