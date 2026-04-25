@@ -308,6 +308,15 @@
     });
   }
 
+  function shortPath(path) {
+    if (!path) return '<span class="muted">—</span>';
+    const MAX = 44;
+    const safe = escapeHtml(path);
+    if (path.length <= MAX) return '<span class="muted">' + safe + '</span>';
+    return '<span class="muted" title="' + safe + '" style="cursor:default">' +
+           escapeHtml(path.slice(0, MAX)) + '&hellip;</span>';
+  }
+
   function renderPixelEventsBreakdown(rows) {
     const map = {};
     rows.forEach(function (r) {
@@ -324,11 +333,12 @@
     }
     $('pixelEventsTable').innerHTML = list.map(function (e) {
       const name = e[0]; const v = e[1];
-      const paths = Array.from(v.paths).slice(0, 3).map(escapeHtml).join(', ') + (v.paths.size > 3 ? ' …' : '');
+      const topPaths = Array.from(v.paths).slice(0, 2);
+      const pathsHtml = topPaths.map(shortPath).join(' ') + (v.paths.size > 2 ? ' <span class="muted">+' + (v.paths.size - 2) + '</span>' : '');
       return '<tr>' +
         '<td><code>' + escapeHtml(name) + '</code></td>' +
         '<td class="num">' + fmtNum(v.count) + '</td>' +
-        '<td class="muted">' + (paths || '—') + '</td>' +
+        '<td class="col-path">' + (pathsHtml || '<span class="muted">—</span>') + '</td>' +
         '<td class="muted">' + fmtTimeAgo(v.last) + '</td>' +
       '</tr>';
     }).join('');
@@ -343,7 +353,7 @@
       return '<tr>' +
         '<td class="muted">' + fmtTimeAgo(r.created_at) + '</td>' +
         '<td><code>' + escapeHtml(r.event) + '</code></td>' +
-        '<td class="muted">' + escapeHtml(r.path || '—') + '</td>' +
+        '<td class="col-path">' + shortPath(r.path) + '</td>' +
         '<td>' + shortReferrer(r.referrer) + '</td>' +
       '</tr>';
     }).join('');

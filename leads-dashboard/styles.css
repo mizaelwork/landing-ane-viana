@@ -566,6 +566,18 @@ button {
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+/* ===== Path truncation ===== */
+.table .col-path {
+  max-width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 640px) {
+  .table .col-path { display: none; }
+  .table th.col-path { display: none; }
+}
+
 /* ===== Mobile tweaks ===== */
 @media (max-width: 540px) {
   .app { padding: 12px 12px 60px; }
