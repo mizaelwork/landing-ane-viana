@@ -170,6 +170,32 @@
   // PIXEL
   // ============================================================
 
+  const BUTTON_DEFS = [
+    { event: 'click_telegram_vip',  label: 'Telegram VIP' },
+    { event: 'click_grupo_gratis',  label: 'Grupo Grátis' },
+    { event: 'click_closefans',     label: 'Closefans'    },
+    { event: 'click_privacy',       label: 'Privacy'      },
+    { event: 'click_instagram',     label: 'Instagram'    }
+  ];
+
+  function renderButtonClicks(rows) {
+    const counts = {};
+    BUTTON_DEFS.forEach(function (b) { counts[b.event] = 0; });
+    rows.forEach(function (r) {
+      if (r.event in counts) counts[r.event]++;
+    });
+    const max = Math.max(1, Math.max.apply(null, Object.values(counts)));
+    $('btnClicksList').innerHTML = BUTTON_DEFS.map(function (b) {
+      const n = counts[b.event];
+      const w = Math.round((n / max) * 100);
+      return '<div class="bcl-row">' +
+        '<span class="bcl-label">' + escapeHtml(b.label) + '</span>' +
+        '<div class="bcl-bar-wrap"><div class="bcl-bar" style="width:' + w + '%"></div></div>' +
+        '<span class="bcl-num">' + fmtNum(n) + '</span>' +
+      '</div>';
+    }).join('');
+  }
+
   let pixelChart = null;
 
   async function loadPixel() {
@@ -193,6 +219,7 @@
 
       renderPixelKpis(rows, days);
       renderPixelChart(rows, days);
+      renderButtonClicks(rows);
       renderPixelEventsBreakdown(rows);
       renderPixelRecent(rows.slice(0, 50));
 

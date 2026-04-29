@@ -566,6 +566,43 @@ button {
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+/* ===== Cliques por Botão ===== */
+.btn-clicks-list { padding: 6px 0; }
+.bcl-row {
+  display: grid;
+  grid-template-columns: 130px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+.bcl-row:last-child { border-bottom: none; }
+.bcl-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gold-bright);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.bcl-bar-wrap {
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+  height: 8px;
+  overflow: hidden;
+}
+.bcl-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--wine-bright), #c03050);
+  border-radius: 4px;
+  min-width: 2px;
+}
+.bcl-num {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: right;
+}
+
 /* ===== Path truncation ===== */
 .table .col-path {
   max-width: 240px;
