@@ -46,8 +46,9 @@ app.get('/healthz', (req, res) => res.status(200).send('ok'));
 // Recebe eventos do tracker.js, captura IP real e encaminha ao Meta CAPI.
 // Token configurado via env var META_CAPI_TOKEN no EasyPanel.
 
-const CAPI_PIXEL_ID = '4404191296561458';
-const CAPI_TOKEN    = process.env.META_CAPI_TOKEN || '';
+const CAPI_PIXEL_ID  = '4404191296561458';
+const CAPI_TOKEN     = process.env.META_CAPI_TOKEN      || '';
+const CAPI_TEST_CODE = process.env.META_CAPI_TEST_CODE  || '';
 
 const EVENT_MAP = {
   pageview_prelanding: 'PageView',
@@ -94,16 +95,17 @@ app.post('/capi', (req, res) => {
     if (raw.fbp)        userData.fbp                 = raw.fbp;
     if (raw.fbc)        userData.fbc                 = raw.fbc;
 
-    const payload = JSON.stringify({
-      data: [{
-        event_name:       eventName,
-        event_time:       Math.floor(Date.now() / 1000),
-        action_source:    'website',
-        event_source_url: raw.url || null,
-        user_data:        userData,
-        custom_data:      { ane_event: raw.event }
-      }]
-    });
+    const eventObj = {
+      event_name:       eventName,
+      event_time:       Math.floor(Date.now() / 1000),
+      action_source:    'website',
+      event_source_url: raw.url || null,
+      user_data:        userData,
+      custom_data:      { ane_event: raw.event }
+    };
+    const capiBody = { data: [eventObj] };
+    if (CAPI_TEST_CODE) capiBody.test_event_code = CAPI_TEST_CODE;
+    const payload = JSON.stringify(capiBody);
 
     const options = {
       hostname: 'graph.facebook.com',
