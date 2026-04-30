@@ -43,13 +43,14 @@
         credentials: 'omit'
       }).catch(function () {});
 
-      // 2. n8n → Meta Conversions API (server-side, captura IP real)
+      // 2. n8n → Meta Conversions API (text/plain evita CORS preflight)
       fetch(CAPI_WEBHOOK, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(payload),
         keepalive: true,
-        credentials: 'omit'
+        credentials: 'omit',
+        mode: 'no-cors'
       }).catch(function () {});
 
     } catch (_) {}
