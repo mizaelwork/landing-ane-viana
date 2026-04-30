@@ -43,11 +43,11 @@
         credentials: 'omit'
       }).catch(function () {});
 
-      // 2. n8n → Meta Conversions API (text/plain evita CORS preflight)
+      // 2. n8n → Meta Conversions API (form-encoded evita CORS preflight)
       fetch(CAPI_WEBHOOK, {
         method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'd=' + encodeURIComponent(JSON.stringify(payload)),
         keepalive: true,
         credentials: 'omit',
         mode: 'no-cors'
