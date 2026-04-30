@@ -11,6 +11,7 @@
 const express  = require('express');
 const basicAuth = require('express-basic-auth');
 const path     = require('path');
+const https    = require('https');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -40,6 +41,93 @@ app.get('/t', (req, res) => {
 
 // healthcheck
 app.get('/healthz', (req, res) => res.status(200).send('ok'));
+
+// --- Meta Conversions API proxy ----------------------------------
+// Recebe eventos do tracker.js, captura IP real e encaminha ao Meta CAPI.
+// Token configurado via env var META_CAPI_TOKEN no EasyPanel.
+
+const CAPI_PIXEL_ID = '4404191296561458';
+const CAPI_TOKEN    = process.env.META_CAPI_TOKEN || '';
+
+const EVENT_MAP = {
+  pageview_prelanding: 'PageView',
+  pageview_main:       'PageView',
+  cta_click:           'Lead',
+  click_telegram_vip:  'Lead',
+  click_grupo_gratis:  'ViewContent',
+  click_closefans:     'ViewContent',
+  click_privacy:       'ViewContent',
+  click_instagram:     'ViewContent'
+};
+
+app.use('/capi', express.json({ limit: '16kb' }));
+app.use('/capi', express.urlencoded({ extended: false, limit: '16kb' }));
+
+app.options('/capi', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type');
+  res.sendStatus(204);
+});
+
+app.post('/capi', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.status(200).json({ ok: true });
+
+  if (!CAPI_TOKEN) return;
+
+  try {
+    const body = req.body || {};
+    const raw  = body.d ? JSON.parse(body.d) : body;
+    const eventName = EVENT_MAP[raw.event];
+    if (!eventName) return;
+
+    const clientIp =
+      (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+      req.headers['x-real-ip'] ||
+      req.socket.remoteAddress ||
+      null;
+
+    const userData = {};
+    if (clientIp)       userData.client_ip_address  = clientIp;
+    if (raw.user_agent) userData.client_user_agent   = raw.user_agent;
+    if (raw.fbp)        userData.fbp                 = raw.fbp;
+    if (raw.fbc)        userData.fbc                 = raw.fbc;
+
+    const payload = JSON.stringify({
+      data: [{
+        event_name:       eventName,
+        event_time:       Math.floor(Date.now() / 1000),
+        action_source:    'website',
+        event_source_url: raw.url || null,
+        user_data:        userData,
+        custom_data:      { ane_event: raw.event }
+      }]
+    });
+
+    const options = {
+      hostname: 'graph.facebook.com',
+      path:     `/v18.0/${CAPI_PIXEL_ID}/events?access_token=${encodeURIComponent(CAPI_TOKEN)}`,
+      method:   'POST',
+      headers:  { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(payload) }
+    };
+
+    const req2 = https.request(options, (r) => {
+      r.resume();
+      if (r.statusCode !== 200) {
+        let body = '';
+        r.on('data', c => { body += c; });
+        r.on('end', () => console.error('[capi] Meta erro', r.statusCode, body));
+      }
+    });
+    req2.on('error', (e) => console.error('[capi] request error', e.message));
+    req2.write(payload);
+    req2.end();
+
+  } catch (e) {
+    console.error('[capi] parse error', e.message);
+  }
+});
 
 // --- Basic Auth para o dashboard ----------------------------------
 
