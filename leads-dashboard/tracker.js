@@ -1,19 +1,30 @@
-// Pixel da Ane Viana — escreve direto no Supabase.
+// Pixel da Ane Viana — escreve direto no Supabase + encaminha pro n8n (Meta CAPI).
 // Carregado nas LPs em produção. Mantém a assinatura window.AneTrack(event)
 // usada nos onclick existentes — zero alteração no HTML dos sites.
 (function () {
-  var SUPABASE_URL = 'https://bakypfaugnsxkvkjasta.supabase.co';
+  var SUPABASE_URL  = 'https://bakypfaugnsxkvkjasta.supabase.co';
   var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJha3lwZmF1Z25zeGt2a2phc3RhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5ODQ1NzMsImV4cCI6MjA5MjU2MDU3M30.OxQrOg-ApiXuOXJAP2VbPshRJDP5bBetNqsGRFxGvrs';
+  var CAPI_WEBHOOK  = 'https://workflow.acessoaneviana.com.br/webhook/meta-capi';
+
+  function getCookie(name) {
+    var m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return m ? m[2] : null;
+  }
 
   function send(event) {
     if (!event) return;
     try {
-      var body = JSON.stringify({
-        event: String(event),
-        path: location.pathname + location.search,
-        referrer: document.referrer || null,
-        user_agent: navigator.userAgent || null
-      });
+      var payload = {
+        event:      String(event),
+        path:       location.pathname + location.search,
+        url:        location.href,
+        referrer:   document.referrer || null,
+        user_agent: navigator.userAgent || null,
+        fbp:        getCookie('_fbp') || null,
+        fbc:        getCookie('_fbc') || null
+      };
+
+      // 1. Supabase (histórico do dashboard)
       fetch(SUPABASE_URL + '/rest/v1/pixel_events', {
         method: 'POST',
         headers: {
@@ -22,10 +33,25 @@
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal'
         },
-        body: body,
+        body: JSON.stringify({
+          event:      payload.event,
+          path:       payload.path,
+          referrer:   payload.referrer,
+          user_agent: payload.user_agent
+        }),
         keepalive: true,
         credentials: 'omit'
       }).catch(function () {});
+
+      // 2. n8n → Meta Conversions API (server-side, captura IP real)
+      fetch(CAPI_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true,
+        credentials: 'omit'
+      }).catch(function () {});
+
     } catch (_) {}
   }
 
