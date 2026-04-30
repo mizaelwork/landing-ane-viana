@@ -4,7 +4,7 @@
 (function () {
   var SUPABASE_URL  = 'https://bakypfaugnsxkvkjasta.supabase.co';
   var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJha3lwZmF1Z25zeGt2a2phc3RhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5ODQ1NzMsImV4cCI6MjA5MjU2MDU3M30.OxQrOg-ApiXuOXJAP2VbPshRJDP5bBetNqsGRFxGvrs';
-  var CAPI_WEBHOOK  = 'https://stats.acessoaneviana.com.br/capi';
+  var CAPI_WEBHOOK  = 'https://workflow.acessoaneviana.com.br/webhook/meta-capi';
 
   function getCookie(name) {
     var m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
@@ -43,7 +43,7 @@
         credentials: 'omit'
       }).catch(function () {});
 
-      // 2. stats/capi → Meta Conversions API (server-side, IP real capturado)
+      // 2. n8n → Meta Conversions API (server-side)
       fetch(CAPI_WEBHOOK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
