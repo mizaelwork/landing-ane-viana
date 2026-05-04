@@ -455,6 +455,10 @@
     if (stage === 'payment_pending') {
       return { key: 'interessado', label: 'PIX gerado' };
     }
+    if (status === 'rem_audio')    return { key: 'rem1', label: '🎙️ Áudio' };
+    if (status === 'rem1_promo')   return { key: 'rem2', label: '💰 REM1 — Promo' };
+    if (status === 'rem2_conferiu') return { key: 'rem3', label: '🥺 REM2' };
+    if (status === 'rem3_flash')   return { key: 'rem4', label: '🚨 REM3 — Flash' };
     if (lead.checkout_sent_at || lead.checkout_url_last_sent) {
       return { key: 'link', label: 'Link enviado' };
     }

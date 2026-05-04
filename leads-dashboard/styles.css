@@ -386,6 +386,14 @@ button {
 .badge-frio            { color: var(--text-dim); }
 .badge-atencao         { color: #d6b48c; border-color: rgba(214,143,76,0.30); background: rgba(214,143,76,0.10); }
 .badge-atencao::before { background: var(--orange); }
+.badge-rem1            { color: #c8b8d6; border-color: rgba(140,90,200,0.30); background: rgba(140,90,200,0.10); }
+.badge-rem1::before    { background: #8c5ac8; }
+.badge-rem2            { color: #d6c8b8; border-color: rgba(200,150,90,0.30); background: rgba(200,150,90,0.10); }
+.badge-rem2::before    { background: #c89650; }
+.badge-rem3            { color: #b8d0d6; border-color: rgba(90,170,200,0.30); background: rgba(90,170,200,0.10); }
+.badge-rem3::before    { background: #5aaac8; }
+.badge-rem4            { color: #ffd6d6; border-color: rgba(220,60,60,0.40); background: rgba(220,60,60,0.15); font-weight: 600; }
+.badge-rem4::before    { background: #dc3c3c; }
 
 .dot-yes, .dot-no {
   display: inline-block;
